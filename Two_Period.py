@@ -12,23 +12,23 @@ def get_positive_part(x):
 
 def main():
     print("input your u : ")
-    u = input()
+    u = float(input())
     print("input your d : ")
-    d = input()
+    d = float(input())
     print("input your r : ")
-    r = input()
+    r = float(input())
     print("input your s0 : ")
-    s0 = input()
+    s0 = float(input())
     print("input your x0 : ")
-    x0 = input()
+    x0 = float(input())
     p,q = get_pricing_measure(u,d,r)
     print("input your ∆0 : ")
-    d0 = input()
+    d0 = float(input())
     print("input your ∆1(H) : ")
-    d_H = input()
+    d_H = float(input())
     print("input your ∆1(T) : ")
-    d_T = input()
-    
+    d_T = float(input())
+
 
     bank_H = (1+r) * (u * s0 * (d0 - d_H) + (1+r) * (x0 - s0*d0))
     bank_T = (1+r) * (u * s0 * (d0 - d_T) + (1+r) * (x0 - s0*d0))
@@ -39,6 +39,7 @@ def main():
 
     y0 = (1+r) ** (-2) * (p * (get_positive_part(x_HH) + get_positive_part(x_HT))
     + q * (get_positive_part(x_TH) + get_positive_part(x_TT)))
+    print("your y0 is",y0)
     return y0
 
 main()
