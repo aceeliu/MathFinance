@@ -10,7 +10,8 @@ def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
 
-def get_y0(u,d,r,s0,x0,d0,d_H,d_T):
+
+def get_y0(u,d,r,s0,x0,d0,d_H,d_T): #implement formula of calculating y0
     p,q = get_pricing_measure(u,d,r)
 
     bank_H = (1+r) * (u * s0 * (d0 - d_H) + (1+r) * (x0 - s0*d0))
@@ -25,9 +26,17 @@ def get_y0(u,d,r,s0,x0,d0,d_H,d_T):
     print("your y0 is",y0)
     return y0
 
+def combination_1(u,d,r,s0,x0): #calculate 8 cases of ∆0, ∆1(H), ∆1(T) varies between 1 , -1
+    print(get_y0(u,d,r,s0,x0,1,1,1))
+    print(get_y0(u,d,r,s0,x0,1,1,-1))
+    print(get_y0(u,d,r,s0,x0,1,-1,1))
+    print(get_y0(u,d,r,s0,x0,-1,1,1))
+    print(get_y0(u,d,r,s0,x0,1,-1,-1))
+    print(get_y0(u,d,r,s0,x0,-1,1,-1))
+    print(get_y0(u,d,r,s0,x0,-1,-1,1))
+    print(get_y0(u,d,r,s0,x0,-1,-1,-1))
 
-
-def main():
+def main(): #calculate according to your input 
     print("input your u : ")
     u = float(input())
     print("input your d : ")
@@ -53,8 +62,7 @@ def main():
     #what is always strategy when (p < q) ^ (p == q) ^ (p > q)
     #limit in binomial model 
 
-
-main()
+# main()
     
     
    
