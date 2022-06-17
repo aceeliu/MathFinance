@@ -12,22 +12,21 @@ def get_positive_part(x):
     else : return 0
 
 p,q = get_pricing_measure(u,d,r)
-def get_yk(s0, x0, k, n):
+def get_yk(Sk, Xk, k, n, comb) : #return y
+    if (k == n) :
+        y_n = 
+        return y_n
+    else :
+        Xk_H = (1 + r)(Xk - Sk * comb[][k]) + u*Sk
+        Xk_T = (1 + r)(Xk - Sk * comb[][k]) + d*Sk
+        y1 = get_yk(Sk*u, Xk_H, (k + 1), n)
+        y2 = get_yk(Sk*d, Xk_T, (k + 1), n)
+        return (p * get_positive_part(y1) + q * get_positive_part(y2))
+        
     
-#def get_y0(s0, x0, n, d): #implement formula of calculating y0
-#   bank_H = (1+r) * (u * s0 * (d0 - d_H) + (1+r) * (x0 - s0*d0))
-#   bank_T = (1+r) * (d * s0 * (d0 - d_T) + (1+r) * (x0 - s0*d0))
-#   x_HH = p * (u ** 2 * s0 * d_H + bank_H)
-#   x_HT = q * (u * d * s0 * d_H  + bank_H)
-#   x_TH = p * (u * d * s0 * d_T  + bank_T)
-#   x_TT = q * (d ** 2 * s0 * d_T  + bank_T)
-#   
-#   y0 = (1+r) ** (-n) * 
-#   (p * (get_positive_part(x_HH) + get_positive_part(x_HT))
-#   + q * (get_positive_part(x_TH) + get_positive_part(x_TT)))
-#   # print("y0 is",y0)
-#   return y0
-
+def get_y0(s0, x0, k, n, comb): #implement formula of calculating y0
+    y0 = (1+r) ** (-n) * get_yk(s0, x0, n, 0, comb)
+    
 def combination(n, curr, comb, curr_perm):
     if (curr == n) :
         tmp = copy.copy(curr_perm)
@@ -44,7 +43,6 @@ def main(): #calculate according to your input
     # f = open("2period.txt", "r") 
     #combination_1(2, 0.5, 0.25, 8, 8)
     #combination_1(1.3, 0.94, 0.06, 8, 2)
-    #comb = np.zeros((2**n, n))
     comb = []
     curr_perm = []
     combination(10, 0, comb, curr_perm)
