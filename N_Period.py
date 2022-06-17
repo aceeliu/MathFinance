@@ -28,11 +28,15 @@ def get_positive_part(x):
 #   return y0
 
 def combination(n, curr, comb, curr_perm):
+    print("curr = ", curr)
+    print(curr_perm)
     if (curr == n) :
         comb.append(curr_perm)
     else:
-        combination(n, (curr + 1), comb, curr_perm.append(1))
-        combination(n, (curr + 1), comb, curr_perm.append(-1))
+        tmp = curr_perm.append(1)
+        combination(n, (curr + 1), comb, tmp)
+        tmp2 = curr_perm.append(-1)
+        combination(n, (curr + 1), comb, tmp2)
     
 #def combination_2(u, d, r, s0, x0):
 #   return [
@@ -51,7 +55,8 @@ def main(): #calculate according to your input
     #combination_1(1.3, 0.94, 0.06, 8, 2)
     #comb = np.zeros((2**n, n))
     comb = []
-    combination(4, 1, comb, [])
+    curr_perm = []
+    combination(2, 1, comb, curr_perm)
     print(comb)
 #   y = np.zeros((101,8))
 #   ystd = np.zeros(101)
