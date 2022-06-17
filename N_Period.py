@@ -1,6 +1,7 @@
 #let d0 denotes ∆0, d_H denotes ∆1(H), d_T denotes ∆1(T)
 import matplotlib.pyplot as plt
 import numpy as np
+import copy
 def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
     q = (u-1-r)/(u-d)
@@ -10,8 +11,8 @@ def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
 
-# p,q = get_pricing_measure(u,d,r)
-# def get_y0_k(s0, x0, k, n):
+p,q = get_pricing_measure(u,d,r)
+def get_yk(s0, x0, k, n):
     
 #def get_y0(s0, x0, n, d): #implement formula of calculating y0
 #   bank_H = (1+r) * (u * s0 * (d0 - d_H) + (1+r) * (x0 - s0*d0))
@@ -28,27 +29,17 @@ def get_positive_part(x):
 #   return y0
 
 def combination(n, curr, comb, curr_perm):
-    print("curr = ", curr)
-    print(curr_perm)
     if (curr == n) :
-        comb.append(curr_perm)
+        tmp = copy.copy(curr_perm)
+        comb.append(tmp)
     else:
-        tmp = curr_perm.append(1)
-        combination(n, (curr + 1), comb, tmp)
-        tmp2 = curr_perm.append(-1)
-        combination(n, (curr + 1), comb, tmp2)
+        curr_perm.append(1)
+        combination(n, (curr + 1), comb, curr_perm)
+        curr_perm.pop()
+        curr_perm.append(-1)
+        combination(n, (curr + 1), comb, curr_perm)
+        curr_perm.pop()
     
-#def combination_2(u, d, r, s0, x0):
-#   return [
-#       get_y0(u,d,r,s0,x0,1,1,1), 
-#       get_y0(u,d,r,s0,x0,1,1,-1),
-#       get_y0(u,d,r,s0,x0,1,-1,1),
-#       get_y0(u,d,r,s0,x0,-1,1,1),
-#       get_y0(u,d,r,s0,x0,1,-1,-1),
-#       get_y0(u,d,r,s0,x0,-1,1,-1),
-#       get_y0(u,d,r,s0,x0,-1,-1,1),
-#       get_y0(u,d,r,s0,x0,-1,-1,-1)
-#   ]
 def main(): #calculate according to your input 
     # f = open("2period.txt", "r") 
     #combination_1(2, 0.5, 0.25, 8, 8)
@@ -56,7 +47,7 @@ def main(): #calculate according to your input
     #comb = np.zeros((2**n, n))
     comb = []
     curr_perm = []
-    combination(2, 1, comb, curr_perm)
+    combination(10, 0, comb, curr_perm)
     print(comb)
 #   y = np.zeros((101,8))
 #   ystd = np.zeros(101)
