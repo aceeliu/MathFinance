@@ -12,19 +12,20 @@ def get_positive_part(x):
     else : return 0
 
 p,q = get_pricing_measure(u,d,r)
-def get_yk(Sk, Xk, k, n, comb) : #return y
+def get_yk(Sk, Xk, k, n, comb, id) : #return y
     if (k == n) :
-        y_n = 
-        return y_n
+        Xk_H = (1 + r)(Xk - Sk * comb[id][k]) + u*Sk
+        Xk_T = (1 + r)(Xk - Sk * comb[id][k]) + d*Sk
+        return (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
     else :
-        Xk_H = (1 + r)(Xk - Sk * comb[][k]) + u*Sk
-        Xk_T = (1 + r)(Xk - Sk * comb[][k]) + d*Sk
+        Xk_H = (1 + r)(Xk - Sk * comb[id][k]) + u*Sk
+        Xk_T = (1 + r)(Xk - Sk * comb[id][k]) + d*Sk
         y1 = get_yk(Sk*u, Xk_H, (k + 1), n)
         y2 = get_yk(Sk*d, Xk_T, (k + 1), n)
         return (p * get_positive_part(y1) + q * get_positive_part(y2))
         
     
-def get_y0(s0, x0, k, n, comb): #implement formula of calculating y0
+def get_y0(s0, x0, k, n, comb, id): #implement formula of calculating y0
     y0 = (1+r) ** (-n) * get_yk(s0, x0, n, 0, comb)
     
 def combination(n, curr, comb, curr_perm):
@@ -47,6 +48,8 @@ def main(): #calculate according to your input
     curr_perm = []
     combination(10, 0, comb, curr_perm)
     print(comb)
+    for i in range(2 ** n)
+        get_y0(, i)
 #   y = np.zeros((101,8))
 #   ystd = np.zeros(101)
 #   for i in range(0, 100) :
