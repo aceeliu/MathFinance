@@ -27,7 +27,11 @@ def get_y0(s0, x0, n, d): #implement formula of calculating y0
     # print("y0 is",y0)
     return y0
 
-def combination(n, curr) :
+def combination(n, curr, comb):
+    if (curr == n) :
+        
+    else:
+        combination(n, curr + 1)
     
 #def combination_2(u, d, r, s0, x0):
 #   return [
@@ -40,10 +44,12 @@ def combination(n, curr) :
 #       get_y0(u,d,r,s0,x0,-1,-1,1),
 #       get_y0(u,d,r,s0,x0,-1,-1,-1)
 #   ]
-def main(): #calculate according to your input 
+def main(n): #calculate according to your input 
     # f = open("2period.txt", "r") 
     #combination_1(2, 0.5, 0.25, 8, 8)
     #combination_1(1.3, 0.94, 0.06, 8, 2)
+    comb = np.zeros((2**n, n))
+    combination(n, curr, comb)
     y = np.zeros((101,8))
     ystd = np.zeros(101)
     for i in range(0, 100) :
