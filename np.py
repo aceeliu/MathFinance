@@ -14,21 +14,23 @@ def get_positive_part(x):
 
 def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
     p,q = get_pricing_measure(u,d,r)
-    if (k == n) :
-        Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + u*Sk
-        cnt += 1
-        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + d*Sk
-        ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
-        #print(i, k, ret)
-        return ret
+    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + u*Sk
+    #print("k=",k, " n=",n, "cnt=", cnt)
+    if (k == 0) :
+        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + d*Sk
     else :
-        #print(i,k)
-        Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + u*Sk
         Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + d*Sk
-        y1 = get_yk(u, d, r, Sk*u, Xk_H, (k + 1), n, comb, i, (cnt + 2))
-        y2 = get_yk(u, d, r, Sk*d, Xk_T, (k + 1), n, comb, i, (cnt + 2))
+    if (k == n - 1) :
+        ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
+        return ret
+    else:
+        if (k == 0) : 
+            new_cnt = cnt + 1
+        else: 
+            new_cnt = cnt + 2
+        y1 = get_yk(u, d, r, Sk*u, Xk_H, (k + 1), n, comb, i, new_cnt)
+        y2 = get_yk(u, d, r, Sk*d, Xk_T, (k + 1), n, comb, i, new_cnt)
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
-        #print(i, k, ret)
         return ret
         
     
@@ -63,12 +65,15 @@ def main(): #calculate according to your input
     n = int(input())
     comb = []
     curr_perm = []
-    num_of_delta = 2**(n+1)-1
+    num_of_delta = 2**n-1
+    #print("num_of_delta",num_of_delta)
     combination(num_of_delta, 0, comb, curr_perm)
+    #print(comb)
     maxx = 0 
     best_comb = []
     for i in range (2**num_of_delta):
         ans = get_y0(u, d, r, s0, x0, 0, n, comb, i)
+        print("y0=",ans," with these deltas:",comb[i])
         if (ans > maxx):
             maxx = ans
             best_comb = comb[i]
