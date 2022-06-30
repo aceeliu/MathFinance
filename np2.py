@@ -12,14 +12,14 @@ def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
 
-def get_yk(u, d, r, Sk, Xk, k, n, comb, i, cnt, lambda) :  #return y
+def get_yk(u, d, r, Sk, Xk, k, n, comb, i, cnt, l) :  #return y
     p,q = get_pricing_measure(u,d,r)
-    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk + lambda)
+    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk + l)
     #print("k=",k, " n=",n, "cnt=", cnt)
     if (k == 0) :
-        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk - lambda)
+        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk - l)
     else :
-        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + (Sk - lambda)
+        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + (Sk - l)
     if (k == n - 1) :
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
@@ -28,14 +28,14 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, cnt, lambda) :  #return y
             new_cnt = cnt + 1
         else: 
             new_cnt = cnt + 2
-        y1 = get_yk((Sk + lambda)/Sk, (Sk - lambda)/Sk, r, Sk + lambda, Xk_H, (k + 1), n, comb, i, new_cnt, lambda)
-        y2 = get_yk((Sk + lambda)/Sk, (Sk - lambda)/Sk, r, Sk - lambda, Xk_T, (k + 1), n, comb, i, new_cnt, lambda)
+        y1 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk + l, Xk_H, (k + 1), n, comb, i, new_cnt, l)
+        y2 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk - l, Xk_T, (k + 1), n, comb, i, new_cnt, l)
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
         return ret
         
     
-def get_y0(u, d, r, s0, x0, k, n, comb, id, lambda): #implement formula of calculating y0
-    y0 = (1+r) ** (-n) * get_yk((s0 + lambda)/s0, (s0 - lambda)/s0, r, s0, x0, 0, n, comb, id, 0, lambda)
+def get_y0(u, d, r, s0, x0, k, n, comb, id, l): #implement formula of calculating y0
+    y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 0, n, comb, id, 0, l)
     return y0
 def combination(n, curr, comb, curr_perm):
     if (curr == n) :
@@ -64,7 +64,7 @@ def main(): #calculate according to your input
     print("input your n : ")
     n = int(input())
     print("input your lambda : ")
-    lambda = float(input())
+    l = float(input())
     comb = []
     curr_perm = []
     num_of_delta = 2**n-1
@@ -74,7 +74,7 @@ def main(): #calculate according to your input
     maxx = 0 
     best_comb = []
     for i in range (2**num_of_delta):
-        ans = get_y0(u, d, r, s0, x0, 0, n, comb, i, lambda)
+        ans = get_y0(u, d, r, s0, x0, 0, n, comb, i, l)
         print("y0=",ans," with these deltas:",comb[i])
         if (ans > maxx):
             maxx = ans
