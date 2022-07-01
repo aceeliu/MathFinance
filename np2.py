@@ -42,7 +42,7 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
         return ret    
     
-def get_y0(u, d, r, s0, x0, k, n, comb, id, l): #implement formula of calculating y0
+def get_y0(r, s0, x0, k, n, comb, id, l): #implement formula of calculating y0
     y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 0, n, comb, id, l, 0)
     return y0
     
@@ -60,10 +60,10 @@ def combination(n, curr, comb, curr_perm):
 
 def main(): #calculate according to your input 
     # f = open("2period.txt", "r") 
-    print("input your u : ")
-    u = float(input())
-    print("input your d : ")
-    d = float(input())
+#   print("input your u : ")
+#   u = float(input())
+#   print("input your d : ")
+#   d = float(input())
     print("input your r : ")
     r = float(input())
     print("input your s0 : ")
@@ -83,7 +83,7 @@ def main(): #calculate according to your input
     maxx = 0 
     best_comb = []
     for i in range (2**num_of_delta):
-        ans = get_y0(u, d, r, s0, x0, 0, n, comb, i, l)
+        ans = get_y0(r, s0, x0, 0, n, comb, i, l)
         print("y0=",ans," with these deltas:",comb[i])
         if (ans > maxx):
             maxx = ans
