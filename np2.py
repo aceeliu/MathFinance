@@ -5,9 +5,13 @@ import copy
 
 
 from types import SimpleNamespace
-cnt = SimpleNamespace(n=0)
-print(cnt)
-print(cnt.n)
+cnt = SimpleNamespace(nn=0)
+# print(cnt)
+# print("now",cnt.n)
+# cnt.n+=1
+# print("n",cnt.n)
+# print(type(cnt.n))
+
 
 def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
@@ -23,27 +27,26 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p = 0.5
     q = 0.5
     r = 0
-    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk + l) * comb[i][cnt.n]
+    print("k= ", k, "cnt.nn=",cnt.nn)
+    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
     #print("k=",k, " n=",n, "cnt=", cnt)
     if (k > 0) :
-        cnt.n += 1
-    Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + (Sk - l) * comb[i][cnt.n]
+        cnt.nn += 1
+    Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk - l) * comb[i][cnt.nn]
+    print("k= ", k, "cnt.nn=",cnt.nn)
     if k == n - 1 :
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
     else:
-        cnt.n += 1
-#       if (k == 0) : 
-#           cnt.n+=1
-#       else: 
-#           cnt.n+=2
+        cnt.nn += 1
         y1 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk + l, Xk_H, (k + 1), n, comb, i, l, cnt)
+        cnt.nn -= 1
         y2 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk - l, Xk_T, (k + 1), n, comb, i, l, cnt)
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
         return ret    
     
 def get_y0(r, s0, x0, k, n, comb, id, l): #implement formula of calculating y0
-    y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 0, n, comb, id, l, 0)
+    y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 0, n, comb, id, l, cnt)
     return y0
     
 def combination(n, curr, comb, curr_perm):
@@ -76,7 +79,7 @@ def main(): #calculate according to your input
     l = float(input())
     comb = []
     curr_perm = []
-    num_of_delta = 2**n-1
+    num_of_delta = 2**(n+1)-1
     #print("num_of_delta",num_of_delta)
     combination(num_of_delta, 0, comb, curr_perm)
     #print(comb)
