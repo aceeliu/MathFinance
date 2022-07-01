@@ -26,15 +26,13 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
     p = 0.5
     q = 0.5
-    r = 0
     print("k= ", k, "cnt.nn=",cnt.nn)
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
-    #print("k=",k, " n=",n, "cnt=", cnt)
     if (k > 0) :
         cnt.nn += 1
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk - l) * comb[i][cnt.nn]
     print("k= ", k, "cnt.nn=",cnt.nn)
-    if k == n - 1 :
+    if k == n - 1:
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
     else:
@@ -79,13 +77,14 @@ def main(): #calculate according to your input
     l = float(input())
     comb = []
     curr_perm = []
-    num_of_delta = 2**(n+1)-1
+    num_of_delta = 2**n-1
     #print("num_of_delta",num_of_delta)
     combination(num_of_delta, 0, comb, curr_perm)
     #print(comb)
     maxx = 0 
     best_comb = []
     for i in range (2**num_of_delta):
+        cnt.nn = 0
         ans = get_y0(r, s0, x0, 0, n, comb, i, l)
         print("y0=",ans," with these deltas:",comb[i])
         if (ans > maxx):
