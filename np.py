@@ -14,12 +14,12 @@ def get_positive_part(x):
 
 def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
     p,q = get_pricing_measure(u,d,r)
-    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + u*Sk
+    Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt]) + u * Sk * comb[i][cnt]
     #print("k=",k, " n=",n, "cnt=", cnt)
     if (k == 0) :
-        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + d*Sk
+        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt]) + d * Sk * comb[i][cnt]
     else :
-        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + d*Sk
+        Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt + 1]) + d * Sk * comb[i][cnt + 1]
     if (k == n - 1) :
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
@@ -33,10 +33,10 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
         return ret
         
-    
 def get_y0(u, d, r, s0, x0, k, n, comb, id): #implement formula of calculating y0
     y0 = (1+r) ** (-n) * get_yk(u, d, r, s0, x0, 0, n, comb, id, 0)
     return y0
+    
 def combination(n, curr, comb, curr_perm):
     if (curr == n) :
         tmp = copy.copy(curr_perm)
