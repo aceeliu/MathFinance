@@ -76,6 +76,7 @@ def main(): #calculate according to your input
     n = int(input())
     print("input your lambda : ")
     l = float(input())
+    n -= 1
     comb = []
     curr_perm = []
     num_of_delta = 2**n-1
