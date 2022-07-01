@@ -26,12 +26,12 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
     p = 0.5
     q = 0.5
-    print("k= ", k, "cnt.nn=",cnt.nn)
+    # print("k= ", k, "cnt.nn=",cnt.nn)
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
     if (k > 0) :
         cnt.nn += 1
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk - l) * comb[i][cnt.nn]
-    print("k= ", k, "cnt.nn=",cnt.nn)
+    # print("k= ", k, "cnt.nn=",cnt.nn)
     if k == n - 1:
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
