@@ -2,8 +2,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import copy
-
-
 from types import SimpleNamespace
 cnt = SimpleNamespace(nn=0)
 # print(cnt)
@@ -11,21 +9,15 @@ cnt = SimpleNamespace(nn=0)
 # cnt.n+=1
 # print("n",cnt.n)
 # print(type(cnt.n))
-
-
 def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
     q = (u-1-r)/(u-d)
     return (p,q)
-
 def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
-
 def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
-    p = 0.5
-    q = 0.5
     # print("1 k= ", k, "cnt.nn=",cnt.nn)
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
 #   if (k > 1) :
@@ -64,7 +56,6 @@ def combination(n, curr, comb, curr_perm):
         curr_perm.append(-1.0)
         combination(n, (curr + 1), comb, curr_perm)
         curr_perm.pop()
-
 def main(): #calculate according to your input 
     print("input your r : ")
     r = float(input())
