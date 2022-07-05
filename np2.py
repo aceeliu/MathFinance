@@ -5,7 +5,7 @@ import copy
 from types import SimpleNamespace
 cnt = SimpleNamespace(nn=0)
 # print(cnt)
-# print("now",cnt.n)
+print("now",cnt.nn)
 # cnt.n+=1
 # print("n",cnt.n)
 # print(type(cnt.n))
@@ -16,6 +16,7 @@ def get_pricing_measure(u,d,r):
 def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
+
 def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
     # print("1 k= ", k, "cnt.nn=",cnt.nn)
@@ -39,10 +40,9 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
         # print("ret = ", ret)
         return ret
     
-    
-def get_y0(r, s0, x0, k, n, comb, id, l): #implement formula of calculating y0
+def get_y0(r, s0, x0, k, n, comb, i, l): #implement formula of calculating y0
     cnt.nn = 0
-    y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 1, n, comb, id, l, cnt)
+    y0 = (1+r) ** (-n) * get_yk((s0 + l)/s0, (s0 - l)/s0, r, s0, x0, 1, n, comb, i, l, cnt)
     return y0
     
 def combination(n, curr, comb, curr_perm):
