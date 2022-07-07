@@ -33,6 +33,7 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
         
 def get_y0(u, d, r, s0, x0, k, n, comb, id): #implement formula of calculating y0
     y0 = (1+r) ** (-n) * get_yk(u, d, r, s0, x0, 1, n, comb, id, cnt)
+    print(comb[i])
     return y0
     
 def combination(n, curr, comb, curr_perm):

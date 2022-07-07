@@ -28,9 +28,9 @@ def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     if k < n:
         # print("k = ", k, "cnt.nn =",cnt.nn)
         cnt.nn += 1
-        y1 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk + l, Xk_H, (k + 1), n, comb, i, l, cnt)
+        y1 = get_yk((Sk + 2*l)/(Sk + l), (Sk)/(Sk+l), r, Sk + l, Xk_H, (k + 1), n, comb, i, l, cnt)
         cnt.nn += 1
-        y2 = get_yk((Sk + l)/Sk, (Sk - l)/Sk, r, Sk - l, Xk_T, (k + 1), n, comb, i, l, cnt)
+        y2 = get_yk((Sk)/(Sk-l), (Sk - 2*l)/(Sk - l), r, Sk - l, Xk_T, (k + 1), n, comb, i, l, cnt)
         # print("k = ", k, "y1 = ", y1, "y2 = ", y2)
         ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
         return ret  
