@@ -32,8 +32,9 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, cnt) : #return y
         return ret
         
 def get_y0(u, d, r, s0, x0, k, n, comb): #implement formula of calculating y0
+    comb = []
     y0 = (1+r) ** (-n) * get_yk(u, d, r, s0, x0, 1, n, comb, cnt)
-    return y0
+    return y0,comb
 
 
 def main(): #calculate according to your input 
@@ -50,13 +51,12 @@ def main(): #calculate according to your input
     print("input your n : ")
     n = int(input())
 
-    comb = []
     maxx = 0
     avg_cnt = 0
     avg = 0
 
     for t in range (2**10):
-       y0 = get_y0(u, d, r, s0, x0, 0, n, comb)
+       y0,comb = get_y0(u, d, r, s0, x0, 0, n, [])
        avg_cnt += 1
        avg += y0
        if (y0 > maxx):
