@@ -1,3 +1,6 @@
+#can estimate the accuracy of the randomize algorithm by comparing 
+#values up to 4 period 
+
 import random
 import copy
 from types import SimpleNamespace
@@ -120,6 +123,8 @@ def input_fn():
     n = int(input())
     return u,d,r,s0,x0,n
 
+print("comment out line 132-137 when try to input n>=5")
+
 u,d,r,s0,x0,n = input_fn()
 
 result = main_rand(u,d,r,s0,x0,n)
@@ -127,4 +132,11 @@ ideal = main_np(u,d,r,s0,x0,n)
 diff = abs(result - ideal) / ideal 
 
 print(result,ideal)
-print("difference in percentage",diff*100)
+print("Compare estimation with calculation--" )
+print("difference in percentage:",diff*100)
+
+result2 = main_rand(u,d,r,s0,x0,n)
+diff2 = abs(result - result2) / result2
+print(result,result2)
+print("Compare estimation with different sets of samples--" )
+print("difference in percentage:",diff2*100)
