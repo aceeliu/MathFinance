@@ -14,10 +14,8 @@ def get_pricing_measure(u,d,r):
 def square(x):
     return x**2
 
-def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
-    #p,q = get_pricing_measure(u,d,r)
-    p = 0.5
-    q = 0.5
+def get_yk(u, d, r, Sk, Xk, k, n, comb, i, cnt) : #return y
+    p,q = get_pricing_measure(u,d,r)
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + u * Sk * comb[i][cnt.nn]
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + d * Sk * comb[i][cnt.nn]
     if k < n:
@@ -29,6 +27,7 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
         ret = (p * square(y1) + q * square(y2))
         return ret  
     else:
+        print(Xk_H, Xk_T, p, q)
         ret = (p * square(Xk_H) + q * square(Xk_T))
         return ret
         
