@@ -11,9 +11,8 @@ def get_pricing_measure(u,d,r):
     q = (u-1-r)/(u-d)
     return (p,q)
 
-def get_positive_part(x):
-    if x >= 0 : return x
-    else : return 0
+def square(x):
+    return x**2
 
 def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
     #p,q = get_pricing_measure(u,d,r)
@@ -27,10 +26,10 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
         cnt.nn += 1
         y2 = get_yk(u, d, r, Sk*d, Xk_T, (k + 1), n, comb, i, cnt)
         # print("k = ", k, "y1 = ", y1, "y2 = ", y2)
-        ret = (p * get_positive_part(y1) + q * get_positive_part(y2))
+        ret = (p * square(y1) + q * square(y2))
         return ret  
     else:
-        ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
+        ret = (p * square(Xk_H) + q * square(Xk_T))
         return ret
         
 def get_y0(u, d, r, s0, x0, k, n, comb, id): #implement formula of calculating y0
