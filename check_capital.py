@@ -35,6 +35,7 @@ def get_capital(u,d,r,x0,s0,d0,d1_H,d1_T,d2_HH,d2_TT,d2_HT,d2_TH):
     x3_TTT = (1+r)*(x2_TT - d2_TT * (s0*d**2)) + (s0*d**3) * d2_TT
     return (x1_H,x1_T,x2_HH,x2_HT,x2_TH,x2_TT,x3_HHH,x3_HHT,
             x3_HTH,x3_HTT,x3_THH,x3_THT,x3_TTH,x3_TTT)
-print(get_price(2,0.6,0.25,5,10,-1,1,-1,-1,1,-1,-1))
+print(get_price(2,0.6,0.25,5,10,1,1,1,1,1,1,1))
+print(get_price(2,0.6,0.25,5,10,-1,-1,-1,-1,-1,-1,-1))
 print(get_capital(2,0.6,0.25,5,10,-1,1,-1,-1,1,-1,-1))
 print(get_pricing_measure(2,0.6,0.25))
