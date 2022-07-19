@@ -95,7 +95,7 @@ def main(u, d, r, s0, x0): #calculate according to your input
     # x0 = float(input())
     # print("input your n : ")
     # n = int(input())
-    n = 3
+    n = 5
     comb = []
     curr_perm = []
     num_of_delta = 2**n-1
@@ -130,11 +130,15 @@ def counter():
         d = random.uniform(0.1, 0.9)
         s0 = random.uniform(1, 100)
         x0 = random.uniform(1, 100)
-        (best_comb, max1, max2, conjecture, abs_conj, positive_part_conj) = main(u, d, r, s0, x0)
-        approx = math.isclose(max2, positive_part_conj, abs_tol = 0.001)
-        if (not approx) :
-            return (u, d, r, s0, x0, best_comb, max1, max2, conjecture, abs_conj, positive_part_conj)
+        p,q = get_pricing_measure(u, d, r)
+        if (p < q) :
+            print("u=", u, "d=", d, "r=", r, "s0=", s0, "x0=", x0)
+            (best_comb, max1, max2, conjecture, abs_conj, positive_part_conj) = main(u, d, r, s0, x0)
+            approx = math.isclose(max2, positive_part_conj, abs_tol = 0.001)
+            if (not approx and max2 > positive_part_conj) :
+                return (u, d, r, s0, x0, best_comb, max1, max2, conjecture, abs_conj, positive_part_conj)
+            
 (u, d, r, s0, x0, best_comb, max1, max2, conjecture, abs_conj, positive_part_conj) = counter()
-print(u, d, r, s0, x0)
+print("u=", u, "d=", d, "r=", r, "s0=", s0, "x0=", x0)
 print("best_comb", best_comb, max2)
 print("conjecture", conjecture, positive_part_conj)
