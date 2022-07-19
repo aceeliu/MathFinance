@@ -11,7 +11,10 @@ cnt = SimpleNamespace(nn=0)
 def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
     q = (u-1-r)/(u-d)
-    return (p,q)
+    if p >= 1 or p <= 0 or q >= 1 or q <= 0:
+        quit("Arbitrage")
+    else:
+        return (p,q)
 
 def abs(x):
     if x > 0:

@@ -14,7 +14,10 @@ cnt = SimpleNamespace(nn=0)
 def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
     q = (u-1-r)/(u-d)
-    return (p,q)
+    if p >= 1 or p <= 0 or q >= 1 or q <= 0:
+        quit("Arbitrage")
+    else:
+        return (p,q)
 def get_positive_part(x):
     if x >= 0 : return x
     else : return 0
@@ -102,21 +105,22 @@ def main(r, s0, x0, n, l): #calculate according to your input
 def counter(): 
     while(1) :
         r = random.uniform(0.1, 0.9)
-        s0 = random.randint(2, 10)
+        s0 = random.randint(2, 100)
         x0 = random.randint(0, 100)
         l = random.randint(1, s0-1)
-        if (s0 % l != 0):
+        if (s0 % l != 0 and s0 > l * 4):
             n = random.randint(2, 3)
             u = (s0 + l)/s0
             d = (s0 - l)/s0
             p,q = get_pricing_measure(u, d, r)
-            print("r=", r, "s0=", s0, "x0=", x0, "n=", n, "lambda=", l)
-            (positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
-            (best_comb, maxx) = main(r, s0, x0, n, l)
-            positive_part_conj = positive_part_conj * (1+r) ** (-(n-1))
-            approx = math.isclose(maxx, positive_part_conj, abs_tol = 0.001)
-            if (not approx and maxx > positive_part_conj) :
-                return (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj)
+            if (q > 0):
+                print("r=", r, "s0=", s0, "x0=", x0, "n=", n, "lambda=", l)
+                (positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
+                (best_comb, maxx) = main(r, s0, x0, n, l)
+                positive_part_conj = positive_part_conj * (1+r) ** (-(n-1))
+                approx = math.isclose(maxx, positive_part_conj, abs_tol = 0.001)
+                if (not approx and maxx > positive_part_conj) :
+                    return (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj)
             
 (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj) = counter()
 print("r=", r, "s0=", s0, "x0=", x0, "lambda=", l, "n=", n)
