@@ -112,7 +112,7 @@ def counter():
         u = random.uniform(1 + r, 5)
         d = random.uniform(0.1, 0.9)
         s0 = random.uniform(1, 100)
-        x0 = random.uniform(1, 100)
+        x0 = random.uniform(-1000, 1000)
         n = random.randint(5, 13)
         p,q = get_pricing_measure(u, d, r)
         if (p < q) :

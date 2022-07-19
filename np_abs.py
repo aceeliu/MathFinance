@@ -95,7 +95,7 @@ def main(u, d, r, s0, x0): #calculate according to your input
     # x0 = float(input())
     # print("input your n : ")
     # n = int(input())
-    n = 5
+    n = 4
     comb = []
     curr_perm = []
     num_of_delta = 2**n-1
@@ -129,7 +129,7 @@ def counter():
         u = random.uniform(1 + r, 5)
         d = random.uniform(0.1, 0.9)
         s0 = random.uniform(1, 100)
-        x0 = random.uniform(1, 100)
+        x0 = random.uniform(-1000, 1000)
         p,q = get_pricing_measure(u, d, r)
         if (p < q) :
             print("u=", u, "d=", d, "r=", r, "s0=", s0, "x0=", x0)
