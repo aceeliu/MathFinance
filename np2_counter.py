@@ -46,19 +46,17 @@ def get_conjecture(u, d, r, Sk, Xk, k, n, l, conjecture):
         Xk_H = (1 + r)*(Xk - Sk) + u * Sk
         Xk_T = (1 + r)*(Xk - Sk) + d * Sk
     else:
-        conjecture.append(1)
+        conjecture.append(-1)
         Xk_H = (1 + r)*(Xk - Sk * (-1)) + u * Sk * (-1)
         Xk_T = (1 + r)*(Xk - Sk * (-1)) + d * Sk * (-1)
     if (k < n):
-        (y11, y12, conjecture) = get_conjecture((Sk + 2*l)/(Sk + l), (Sk)/(Sk+l), r, Sk + l, Xk_H, (k + 1), n, l, conjecture)
-        (y21, y22, conjecture) = get_conjecture((Sk)/(Sk-l), (Sk - 2*l)/(Sk - l), r, Sk - l, Xk_T, (k + 1), n, l, conjecture)
-        ret1 = p * get_positive_part(y11) + q * get_positive_part(y21)
-        ret2 = p * get_positive_part(y21) + q * get_positive_part(y22)
-        return (ret1, ret2, conjecture)
+        (y1, conjecture) = get_conjecture((Sk + 2*l)/(Sk + l), (Sk)/(Sk+l), r, Sk + l, Xk_H, (k + 1), n, l, conjecture)
+        (y2, conjecture) = get_conjecture((Sk)/(Sk-l), (Sk - 2*l)/(Sk - l), r, Sk - l, Xk_T, (k + 1), n, l, conjecture)
+        ret = p * get_positive_part(y1) + q * get_positive_part(y2)
+        return (ret, conjecture)
     else:
-        ret1 = (p * abs(Xk_H) + q * abs(Xk_T))
-        ret2 = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
-        return (ret1, ret2, conjecture)
+        ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
+        return (ret, conjecture)
     
 def combination(n, curr, comb, curr_perm):
     if (curr == n) :
@@ -108,18 +106,19 @@ def counter():
         x0 = random.randint(0, 100)
         l = random.randint(1, s0-1)
         if (s0 % l != 0):
-            n = random.randint(2, 5)
+            n = random.randint(2, 4)
             u = (s0 + l)/s0
             d = (s0 - l)/s0
             p,q = get_pricing_measure(u, d, r)
             print("r=", r, "s0=", s0, "x0=", x0, "n=", n, "lambda=", l)
-            (abs_conj, positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
+            (positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
             (best_comb, maxx) = main(r, s0, x0, n, l)
+            positive_part_conj = positive_part_conj * (1+r) ** (-(n-1))
             approx = math.isclose(maxx, positive_part_conj, abs_tol = 0.001)
             if (not approx and maxx > positive_part_conj) :
-                return (r, s0, x0, l, n, best_comb, maxx, conjecture, abs_conj, positive_part_conj)
+                return (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj)
             
-(r, s0, x0, l, n, best_comb, maxx, conjecture, abs_conj, positive_part_conj) = counter()
+(r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj) = counter()
 print("r=", r, "s0=", s0, "x0=", x0, "lambda=", l, "n=", n)
 print("best_comb", best_comb, maxx)
 print("conjecture", conjecture, positive_part_conj)
