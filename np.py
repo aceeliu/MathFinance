@@ -16,9 +16,12 @@ def get_positive_part(x):
     else : return 0
 
 def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
-    #p,q = get_pricing_measure(u,d,r)
-    p = 0.5
-    q = 0.5
+    # capital positive, short one share
+    # capital negative, long one share
+    # p < q
+    p,q = get_pricing_measure(u,d,r)
+    # p = 0.5
+    # q = 0.5
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + u * Sk * comb[i][cnt.nn]
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + d * Sk * comb[i][cnt.nn]
     if k < n:
@@ -33,7 +36,7 @@ def get_yk(u, d, r,Sk, Xk, k, n, comb, i, cnt) : #return y
         ret = (p * get_positive_part(Xk_H) + q * get_positive_part(Xk_T))
         return ret
         
-def get_y0(u, d, r, s0, x0, k, n, comb, id): #implement formula of calculating y0
+def get_y0(u, d, r, s0, x0, n, comb, id): #implement formula of calculating y0
     y0 = (1+r) ** (-n) * get_yk(u, d, r, s0, x0, 1, n, comb, id, cnt)
     #print(comb[i])
     return y0
@@ -51,18 +54,18 @@ def combination(n, curr, comb, curr_perm):
         curr_perm.pop()
 
 def main(): #calculate according to your input 
-    print("input your u : ")
-    u = float(input())
-    print("input your d : ")
-    d = float(input())
-    print("input your r : ")
-    r = float(input())
-    print("input your s0 : ")
-    s0 = float(input())
-    print("input your x0 : ")
-    x0 = float(input())
-    print("input your n : ")
-    n = int(input())
+    # print("input your u : ")
+    # u = float(input())
+    # print("input your d : ")
+    # d = float(input())
+    # print("input your r : ")
+    # r = float(input())
+    # print("input your s0 : ")
+    # s0 = float(input())
+    # print("input your x0 : ")
+    # x0 = float(input())
+    # print("input your n : ")
+    # n = int(input())
     comb = []
     curr_perm = []
     num_of_delta = 2**n-1
@@ -71,12 +74,12 @@ def main(): #calculate according to your input
     best_comb = []
     for i in range (2**num_of_delta):
         cnt.nn = 0
-        ans = get_y0(u, d, r, s0, x0, 0, n, comb, i)
+        ans = get_y0(u, d, r, s0, x0, n, comb, i)
         print("y0=",ans," with these deltas:",comb[i])
         if (ans > maxx):
             maxx = ans
             best_comb = comb[i]
             # print(best_comb, maxx)
     print("final best:", best_comb, maxx)
-    
+
 main()
