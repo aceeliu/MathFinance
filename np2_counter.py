@@ -15,7 +15,8 @@ def get_pricing_measure(u,d,r):
     p = (1+r-d)/(u-d)
     q = (u-1-r)/(u-d)
     if p >= 1 or p <= 0 or q >= 1 or q <= 0:
-        quit("Arbitrage")
+        #quit("Arbitrage")
+        return (0,0)
     else:
         return (p,q)
 def get_positive_part(x):
@@ -24,6 +25,8 @@ def get_positive_part(x):
 
 def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
+    if (p == 0 and q == 0) :
+        return 0
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk - l) * comb[i][cnt.nn]
     if k < n:
@@ -44,6 +47,8 @@ def get_y0(r, s0, x0, n, comb, i, l): #implement formula of calculating y0
 
 def get_conjecture(u, d, r, Sk, Xk, k, n, l, conjecture):
     p,q = get_pricing_measure(u,d,r)
+    if (p == 0 and q == 0):
+        return (0, [])
     if ((Xk > 0 and Sk > 0) or (Xk < 0 and Sk < 0)):
         conjecture.append(1)
         Xk_H = (1 + r)*(Xk - Sk) + u * Sk
@@ -116,6 +121,8 @@ def counter():
             if (q > 0):
                 print("r=", r, "s0=", s0, "x0=", x0, "n=", n, "lambda=", l)
                 (positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
+                if (positive_part_conj == 0 and conjecture == []) :
+                    continue
                 (best_comb, maxx) = main(r, s0, x0, n, l)
                 positive_part_conj = positive_part_conj * (1+r) ** (-(n-1))
                 approx = math.isclose(maxx, positive_part_conj, abs_tol = 0.001)
