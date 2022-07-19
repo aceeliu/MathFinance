@@ -59,6 +59,8 @@ def get_conjecture(u, d, r, Sk, Xk, k, n, l, conjecture):
         Xk_T = (1 + r)*(Xk - Sk * (-1)) + d * Sk * (-1)
     if (k < n):
         (y1, conjecture) = get_conjecture((Sk + 2*l)/(Sk + l), (Sk)/(Sk+l), r, Sk + l, Xk_H, (k + 1), n, l, conjecture)
+        if (y1 == 0 and conjecture == []) :
+            return (0, [])
         (y2, conjecture) = get_conjecture((Sk)/(Sk-l), (Sk - 2*l)/(Sk - l), r, Sk - l, Xk_T, (k + 1), n, l, conjecture)
         ret = p * get_positive_part(y1) + q * get_positive_part(y2)
         return (ret, conjecture)
@@ -114,7 +116,7 @@ def counter():
         x0 = random.randint(0, 100)
         l = random.randint(1, s0-1)
         if (s0 % l != 0 and s0 > l * 4):
-            n = random.randint(2, 3)
+            n = random.randint(2, 4)
             u = (s0 + l)/s0
             d = (s0 - l)/s0
             p,q = get_pricing_measure(u, d, r)
