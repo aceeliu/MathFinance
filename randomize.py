@@ -113,11 +113,12 @@ def counter():
         d = random.uniform(0.1, 0.9)
         s0 = random.uniform(1, 100)
         x0 = random.uniform(1, 100)
+        n = random.randint(5, 13)
         p,q = get_pricing_measure(u, d, r)
         if (p < q) :
-            print("u=", u, "d=", d, "r=", r, "s0=", s0, "x0=", x0)
-            (abs_conj, positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, 10, [])
-            (result, best_comb) = mc(u, d, r, s0, x0, 10)
+            print("u=", u, "d=", d, "r=", r, "s0=", s0, "x0=", x0, "n=", n)
+            (abs_conj, positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n, [])
+            (result, best_comb) = mc(u, d, r, s0, x0, n)
             approx = math.isclose(result, positive_part_conj, abs_tol = 0.001)
             if (not approx and result > positive_part_conj) :
                 return (u, d, r, s0, x0, best_comb, result, conjecture, abs_conj, positive_part_conj)
