@@ -106,7 +106,7 @@ def counter():
         x0 = random.randint(0, 100)
         l = random.randint(1, s0-1)
         if (s0 % l != 0):
-            n = random.randint(2, 4)
+            n = random.randint(2, 3)
             u = (s0 + l)/s0
             d = (s0 - l)/s0
             p,q = get_pricing_measure(u, d, r)
