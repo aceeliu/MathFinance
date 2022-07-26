@@ -121,7 +121,7 @@ def counter():
             d = (s0 - l)/s0
             p,q = get_pricing_measure(u, d, r)
             if (q > 0):
-                print("r=", r, "s0=", s0, "x0=", x0, "n=", n, "lambda=", l)
+                print("r =", r, "s0 =", s0, "x0 =", x0, "n =", n, "lambda =", l)
                 (positive_part_conj, conjecture) = get_conjecture(u, d, r, s0, x0, 1, n-1, l, [])
                 if (positive_part_conj == 0 and conjecture == []) :
                     continue
@@ -132,6 +132,6 @@ def counter():
                     return (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj)
             
 (r, s0, x0, l, n, best_comb, maxx, conjecture, positive_part_conj) = counter()
-print("r=", r, "s0=", s0, "x0=", x0, "lambda=", l, "n=", n)
+print("r =", r, "s0 =", s0, "x0 =", x0, "lambda =", l, "n =", n)
 print("best_comb", best_comb, maxx)
 print("conjecture", conjecture, positive_part_conj)
