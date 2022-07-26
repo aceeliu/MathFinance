@@ -25,7 +25,7 @@ def get_positive_part(x):
 
 def get_yk(u, d, r, Sk, Xk, k, n, comb, i, l, cnt):  #return y
     p,q = get_pricing_measure(u,d,r)
-    if (p == 0 and q == 0) :
+    if (p == 0 and q == 0):
         return 0
     Xk_H = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk + l) * comb[i][cnt.nn]
     Xk_T = (1 + r)*(Xk - Sk * comb[i][cnt.nn]) + (Sk - l) * comb[i][cnt.nn]
